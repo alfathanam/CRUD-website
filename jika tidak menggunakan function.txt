@@ -1,0 +1,99 @@
+<?php 
+
+//menyambungkan ke dbms seperti pada materi sebelumnya
+$conn= mysqli_connect("localhost", "root", "", "db_liquid");
+
+
+//mengecek tombol submit sudah ditekan sprt pd materi sebelumnya
+
+if (isset($_POST["submit"])) {
+	//ambil setiap data dari elemen form seperti product nama dll 
+	//kita buat agar lebih mudah,setiap data yang diambil kita simpan dalam variabel  
+	$product=$_POST ["product"];
+	$nama=$_POST["nama"];
+	$type=$_POST["type"];
+	$flavor=$_POST["flavor"];
+	$nicotine=$_POST["nicotine"];
+	$gambar=$_POST["gambar"];
+
+	//cara mengambl data dengan mysqli_queri seperti pada materi sebelumnya. 
+	//queri insert data. 
+	//untuk insert dibwh UNTUK FIELD ID HARUS TETAP DITULIS MESKI NILAINYA KOSONG,karena pada phpmyadmin sudah autoincrement
+
+	$query= "INSERT INTO tb_liq
+				VALUES 
+				('', '$product', '$nama', '$type', '$flavor', '$nicotine', '$gambar  )";
+
+
+	mysqli_query($conn, $query);
+
+	//setelah bisa menambahkan data kedalam dtbase, skrng kita membuat pesan jika data berhasil ditambahkan atau belum
+	//atau pesan jika error karena, meski ada yg error, pesan kesalahan tidak ditampilkan pd mysql
+
+	if (mysqli_affected_rows($conn) > 0 ) {
+		echo "berhasil"; 
+
+	}
+		else {
+			echo "gagal !";
+			echo "<br>";
+			echo mysqli_error($conn); 
+			
+		}
+
+
+
+}
+
+
+	
+
+ ?>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tambah data liquid</title>
+</head>
+<body>
+	<h1>Tambah Data Liquid</h1>
+	
+	<form action="" method="post">
+		<ul>
+			<li>
+				<label for="product"> Product : </label>
+				<input type="text" name="product" id="product">
+			</li>
+			<li>
+				<label for="nama"> Nama Liquid : </label>
+				<input type="text" name="nama" id="nama">
+			</li>
+			<li>
+				<label for="type"> Type Liquid : </label>
+				<input type="text" name="type" id="type">
+			</li>	
+			<li>
+				<label for="flavor"> Flavor Liquid : </label>
+				<input type="text" name="flavor" id="flavor">
+			</li>
+			<li>
+				<label for="nicotine"> Nicotine : </label>
+				<input type="text" name="nicotine" id="nicotine">
+			</li>
+			<li>
+				<label for="gambar"> Gambar : </label>
+				<input type="text" name="gambar" id="gambar">
+			</li>
+			<li>
+				<button type="submit" name="submit"> Tambah Data Liquid !</button>
+			</li>
+
+		</ul>
+
+	</form>
+
+
+</body>
+</html>
